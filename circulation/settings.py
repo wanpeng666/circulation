@@ -25,7 +25,7 @@ SECRET_KEY = '3c$gfk%!-w+z80w$rxtgwyir)q=tt(8#f9!gg+#92=jzz@m9&z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.users',
+    'apps.mast',
 ]
 
 MIDDLEWARE = [
@@ -76,8 +78,12 @@ WSGI_APPLICATION = 'circulation.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'circulation',
+        'USER': 'root',
+        'PASSWORD': 'zaqXSW!@#',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
