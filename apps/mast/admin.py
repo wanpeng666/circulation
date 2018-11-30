@@ -7,5 +7,4 @@ class incidentsAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'status', 'Time', 'islastest', 'sId', 'fId', 'reporter')
 
 
-
 admin.site.register(incidents, incidentsAdmin)

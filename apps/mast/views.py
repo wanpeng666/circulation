@@ -10,7 +10,7 @@ from apps.utils.loginRequired import LoginRequiredMixin
 class incidentsView(View):
     # 获取所有的事件工单
     def get(self, request):
-        allIncidents = [incident for incident in incidents.objects.all() if incident.islastest == True]
+        allIncidents = [incident for incident in incidents.objects.all() if incident.islastest is True]
         incidentList = []
         # 可在循环前分页,暂不做
         for incident in allIncidents:
@@ -40,6 +40,7 @@ class incidentsView(View):
         obj = incidents.objects.create(title=title, level=level, degree=degree, assigned_to_id=assigned_to,
                                        reporter=user)
         obj.status = '2'
+        obj.save()
         obj.sId = obj.id
         obj.fId = ''
         obj.save()
