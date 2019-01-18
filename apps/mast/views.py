@@ -1,34 +1,40 @@
 import copy
+import datetime
 
 from django.http import JsonResponse, QueryDict, HttpResponse
+from django.shortcuts import render
 from django.views import View
 
 from apps.mast.models import incidents
 from apps.utils.loginRequired import LoginRequiredMixin
+from celery_tasks.tasks import test
 
 
 class incidentsView(View):
     # 获取所有的事件工单
     def get(self, request):
+        user = request.user
         allIncidents = [incident for incident in incidents.objects.all() if incident.islastest is True]
         incidentList = []
         # 可在循环前分页,暂不做
-        for incident in allIncidents:
-            incidentDict = {}
-            incidentDict['reporter'] = incident.reporter.username
-            incidentDict['status'] = incident.get_status_display()
-            incidentDict['title'] = incident.title
-            incidentDict['level'] = incident.get_level_display()
-            incidentDict['degree'] = incident.get_degree_display()
-            incidentDict['assigned_to'] = incident.assigned_to.username
-            incidentDict['Time'] = incident.Time
-            incidentList.append(incidentDict)
+        # for incident in allIncidents:
+        #     incidentDict = {}
+        #     incidentDict['reporter'] = incident.reporter.username
+        #     incidentDict['status'] = incident.get_status_display()
+        #     incidentDict['title'] = incident.title
+        #     incidentDict['level'] = incident.get_level_display()
+        #     incidentDict['degree'] = incident.get_degree_display()
+        #     incidentDict['assigned_to'] = incident.assigned_to.username
+        #     incidentDict['Time'] = incident.Time
+        #     incidentList.append(incidentDict)
         content = {
             'success': True,
             'message': '获取事件工单成功',
-            'data': incidentList,
+            'data': allIncidents,
+            # 'data': incidentList,
+            'username': user.username,
         }
-        return JsonResponse(content)
+        return render(request, 'index.html', content)
 
     def post(self, request):
         user = request.user
@@ -110,3 +116,21 @@ class incidentDetailView(View):
             'message': '修改工单成功',
         }
         return JsonResponse(content)
+
+
+class testView(View):
+    def get(self, request):
+        incident = incidents.objects.get(id=1)
+        # thisTime = datetime.datetime.now() - datetime.timedelta(days=7)
+        # print(thisTime)
+        # incident.Time = thisTime
+        # incident.save()
+        print(incident.solvedTime)
+        return HttpResponse('ok')
+
+
+
+class CeleryTest(View):
+    def get(self, request, id):
+        test.delay(id)
+        return HttpResponse('over')

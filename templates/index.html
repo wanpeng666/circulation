@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+<h1>index</h1>
+<p>你好：{{ username }}</p>
+<ol>
+    {% for datum in data %}
+        <li>
+            {{ datum.assigned_to }}
+            {{ datum.degree }}
+            {{ datum.level }}
+            {{ datum.reporter }}
+            {{ datum.status }}
+            {{ datum.Time }}
+            {{ datum.title }}
+        </li>
+    {% endfor %}
+</ol>
+</body>
+
+</html>

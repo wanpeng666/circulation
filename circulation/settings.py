@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_filters',
     'apps.users',
     'apps.mast',
+    'apps.guessNum'
 ]
 
 MIDDLEWARE = [
@@ -129,4 +130,22 @@ AUTH_USER_MODEL = 'users.User'
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+os.path.join(BASE_DIR, "static"),
+]
+
+
+# celery settings
+# celery中间人 redis://redis服务所在的ip地址:端口/数据库号
+BROKER_URL = 'redis://localhost:6379/0'
+# celery结果返回，可用于跟踪结果
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+# celery内容等消息的格式设置
+CELERY_ACCEPT_CONTENT = ['application/json', ]
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+# celery时区设置，使用settings中TIME_ZONE同样的时区
+CELERY_TIMEZONE = TIME_ZONE

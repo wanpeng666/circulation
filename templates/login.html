@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+{#{% load staticfiles %}#}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/slide.js' %}"></script>
+</head>
+<body>
+<h2>登录</h2>
+<div id="formAuth">
+    <span style="color:red;">{{ message }}</span>
+    <form action="{% url 'user:login' %}" method="post">
+        用户名: <input type="text" id='id_username' name="username">
+        密&nbsp;码:<input type="password" id="id_password" name="pwd">
+        <button type="submit" id="loginSubmit">
+            提交
+        </button>
+    </form>
+</div>
+<script>
+    $(function () {
+    })
+</script>
+{#<script>#}
+{#    $(function () {#}
+{#        $('#loginSubmit').click(function () {#}
+{#            var username = $('#id_username').val();#}
+{#            alert(username);#}
+{#            var password = $('#id_password').val();#}
+{#            alert(password);#}
+{#            $.ajax({#}
+{#                url: 'login',#}
+{#                type: 'POST',#}
+{#                data: {#}
+{#                    'username': username,#}
+{#                    'password': password,#}
+{#                },#}
+{#                dataType: 'json',#}
+{#                success: function () {#}
+{#                    alert('登录成功');#}
+{#                },#}
+{#                error: function () {#}
+{#                    $('#id_username').val('');#}
+{#                    $('#id_password').val('');#}
+{#                    alert('登录失败');#}
+{#                }#}
+{#            })#}
+{##}
+{#        })#}
+{##}
+{#    })#}
+{#</script>#}
+</body>
+</html>

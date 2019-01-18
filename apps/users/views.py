@@ -1,6 +1,7 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import View
 
 from apps.users.models import User
@@ -28,4 +29,26 @@ class RegisterView(View):
                 'message': '用户创建失败',
             }
             return JsonResponse(content)
+        user.is_active = True
+        user.save()
         login(request, user)
+        return render(request, 'index.html', user)
+
+
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'login.html', {'message': ''})
+
+    def post(self, request):
+        username = request.POST.get('username', '')
+        pwd = request.POST.get('pwd', '')
+        user = authenticate(username=username, password=pwd)
+        if user:
+            login(request, user)
+            # content = {
+            #     'success': True,
+            #     'message': '登录成功',
+            # }
+            return redirect(reverse('mast:incidents'))
+        else:
+            return render(request, 'login.html', {'message': '登录失败'})

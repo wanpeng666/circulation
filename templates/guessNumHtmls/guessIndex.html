@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/slide.js' %}"></script>
+    <title>主页</title>
+</head>
+<body>
+    <div>
+        <p>请输入需要猜测的数字:</p>
+        <form>
+            <input type="text" id="value">
+        </form>
+        <div style="margin-top: 10px;">
+            <button type="button" id="button">确定</button>
+        </div>
+    </div>
+
+</body>
+<script>
+    $(function () {
+        var button = $('#button');
+        button.click(function () {
+            var Num = $('#value');
+            if (Num.val() === ''){
+                alert('不能为空')
+            }else{
+            alert(Num.val());
+                Num.val('');
+                $.ajax({
+                    url: '',
+                    method:POST,
+                    data:{'val':Num.val()},
+                    dataType:JSON
+                })
+            }
+        })
+    })
+</script>
+</html>

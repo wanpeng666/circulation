@@ -37,6 +37,7 @@ class incidents(models.Model):
     islastest = models.BooleanField(verbose_name='是否最新', default=True)
     fId = models.ForeignKey('self', verbose_name='父ID', on_delete=True, null=True, blank=True, related_name='parent')
     Time = models.DateTimeField(verbose_name='时间', default=timezone.now, blank=True, null=True)
+    solvedTime = models.DateTimeField(verbose_name='解决时间', blank=True, null=True)
     reason = models.CharField(max_length=200, verbose_name='拒绝理由', blank=True)
 
     class Meta:

@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/user/', include('apps.users.urls', namespace='user')),
     path('api/v1/mast/', include('apps.mast.urls', namespace='mast')),
+    path('api/v1/guess/', include('apps.guessNum.urls', namespace='guess')),
 ]

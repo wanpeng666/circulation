@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -6,6 +8,11 @@ from django.conf import settings
 
 
 # Create your models here.
+from django.utils import timezone
+
+from apps.guessNum.models import GameNumberModel
+
+
 class BaseModel(models.Model):
     """为模型类补充字段"""
     # 数据的创建时间
@@ -25,3 +32,14 @@ class User(AbstractUser, BaseModel):
 
     class Meta:
         db_table = "df_users"
+
+
+class Player(models.Model):
+    user = models.ForeignKey(User, verbose_name='用户名', on_delete=True)
+    game = models.ForeignKey(GameNumberModel, verbose_name='GameNum', on_delete=True)
+
+
+class PlayerGuessNums(models.Model):
+    num = models.IntegerField(verbose_name='所猜数字')
+    player = models.ForeignKey(Player, verbose_name='player', on_delete=True)
+    time = models.DateTimeField(default=timezone.now, verbose_name='时间')
