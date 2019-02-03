@@ -8,36 +8,91 @@
     <script type="text/javascript" src="{% static 'js/slide.js' %}"></script>
     <title>主页</title>
 </head>
+<style>
+    .addplayer button {
+        width: 100px;
+        height: 30px;
+    }
+</style>
 <body>
-    <div>
-        <p>请输入需要猜测的数字:</p>
-        <form>
-            <input type="text" id="value">
-        </form>
-        <div style="margin-top: 10px;">
-            <button type="button" id="button">确定</button>
-        </div>
-    </div>
+<div style="width: 300px;float: left">
+    <p>请输入需要猜测的数字:</p>
+    <form>
+        <input type="text" id="value">
+    </form>
 
+</div>
+<div style="height: auto;width: 300px;display: inline-block;right: 10px;top:5px;float: right" class="allusers">
+    <p>请添加参加游戏的人员:</p>
+    {% for user in users %}
+        <button type="button" id="{{ user.id }}"
+                style="margin-bottom: 5px;width: 100px;height: 30px">{{ user.name }}</button>
+    {% endfor %}
+
+</div>
+<div class="addplayer" style="float: left;display: inline-block;clear: both;margin: 10px;width: 300px">
+</div>
+<div style="clear: both;float: left;top: 400px;position: absolute">
+    <button type="button" id="button">确定</button>
+</div>
 </body>
 <script>
     $(function () {
-        var button = $('#button');
-        button.click(function () {
-            var Num = $('#value');
-            if (Num.val() === ''){
-                alert('不能为空')
-            }else{
-            alert(Num.val());
-                Num.val('');
-                $.ajax({
-                    url: '',
-                    method:POST,
-                    data:{'val':Num.val()},
-                    dataType:JSON
-                })
+        let user = $('.allusers button');
+        user.click(function () {
+            let id = $(this).attr('id');
+            let name = $(this).text();
+            let addplayer = $('.addplayer');
+            let bts = $('.addplayer button');
+            let isappend = 1;
+            $.each(bts, function () {
+                if ($(this).attr('id') === id) {
+                    alert('已经添加');
+                    isappend = 0;
+                }
+            });
+            if (isappend === 1) {
+                addplayer.append('<button id=' + id + '>' + name + '</button>')
             }
-        })
+        });
+        let btns = $('.addplayer');
+        btns.on('click', 'button', function () {
+            $(this).remove()
+        });
+        let confirm = $('#button');
+        confirm.click(function () {
+            var Num = $('#value');
+            if (Num.val() === '') {
+                alert('不能为空')
+            }
+            idList = [];
+            var allusers = $('.allusers button');
+            $.each(allusers, function () {
+                idList.append($(this).attr('id'));
+            });
+            if (idList.length < 2) {
+                alert('请至少输入两个人员')
+            }
+            alert(idList)
+        });
+
+
+        {#var button = $('#button');#}
+        {#button.click(function () {#}
+        {#    var Num = $('#value');#}
+        {#    if (Num.val() === '') {#}
+        {#        alert('不能为空')#}
+        {#    } else {#}
+        {#        alert(Num.val());#}
+        {#        Num.val('');#}
+        {#        $.ajax({#}
+        {#            url: '',#}
+        {#            method: POST,#}
+        {#            data: {'val': Num.val()},#}
+        {#            dataType: JSON#}
+        {#        })#}
+        {#    }#}
+        //})
     })
 </script>
 </html>

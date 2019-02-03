@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.guessNum.models import NumberModel
+from apps.guessNum.models import GameNumberModel
 
 
 class NumberModelAdmin(admin.ModelAdmin):
@@ -8,4 +8,4 @@ class NumberModelAdmin(admin.ModelAdmin):
 
 
 
-admin.site.register(NumberModel, NumberModelAdmin)
+admin.site.register(GameNumberModel, NumberModelAdmin)

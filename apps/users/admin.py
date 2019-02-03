@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from apps.users.models import User
+from apps.users.models import Users
 
 
-class userAdmin(admin.ModelAdmin):
+class usersAdmin(admin.ModelAdmin):
     pass
 
 
 
-admin.site.register(User, userAdmin)
+admin.site.register(Users, usersAdmin)

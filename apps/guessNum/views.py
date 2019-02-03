@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import View
 
 from apps.guessNum.models import GameNumberModel
-from apps.users.models import User, Player, PlayerGuessNums
+from apps.users.models import Users, Player, PlayerGuessNums
 
 
 class IndexVIew(View):
@@ -15,6 +15,10 @@ class IndexVIew(View):
 
 # 创建游戏
 class CreateNewGameView(View):
+    def get(self, request):
+        users = Users.objects.all()
+        return render(request, 'guessNumHtmls/guessIndex.html', {'users': users})
+
     def post(self, request):
         num = request.POST.get('num')
         playerList = request.POST.get('playerList')
@@ -56,7 +60,3 @@ class StartGuessView(View):
             }
             return JsonResponse(content)
         return JsonResponse(content)
-
-
-
-

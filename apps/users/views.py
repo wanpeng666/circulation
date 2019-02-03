@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 
-from apps.users.models import User
+from apps.users.models import Users
 
 
 class RegisterView(View):
@@ -22,7 +22,7 @@ class RegisterView(View):
             }
             return JsonResponse(content)
         try:
-            user = User.objects.create_user(username=username, password=pwd, email=email)
+            user = Users.objects.create_user(username=username, password=pwd, email=email)
         except Exception as e:
             content = {
                 'success': False,

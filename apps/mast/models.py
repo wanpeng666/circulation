@@ -1,11 +1,11 @@
 from django.db import models
 from django.utils import timezone
 
-from apps.users.models import User
+from apps.users.models import Users
 
 
 class incidents(models.Model):
-    reporter = models.ForeignKey(User, max_length=15, verbose_name='报障人', blank=True, on_delete=True,
+    reporter = models.ForeignKey(Users, max_length=15, verbose_name='报障人', blank=True, on_delete=True,
                                  related_name='reporter')
     status_choice = (
         ('1', '未受理'),
@@ -31,7 +31,7 @@ class incidents(models.Model):
         ('4', '低'),
     )
     degree = models.CharField(max_length=2, choices=emergencyChoice, verbose_name='紧急程度', blank=True)
-    assigned_to = models.ForeignKey(User, verbose_name='指派给', on_delete=True, null=True, blank=True,
+    assigned_to = models.ForeignKey(Users, verbose_name='指派给', on_delete=True, null=True, blank=True,
                                     related_name='recived')
     sId = models.ForeignKey('self', verbose_name='源ID', on_delete=True, null=True, blank=True, related_name='source')
     islastest = models.BooleanField(verbose_name='是否最新', default=True)
